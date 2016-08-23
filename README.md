@@ -5,7 +5,7 @@ A simple linked list implementation in Crystal
 
 # Usage
 ```
-require "./src/linked_list"
+require "linked_list"
 
 list = LinkedList(Int32 | String).new
 list.append(1)
