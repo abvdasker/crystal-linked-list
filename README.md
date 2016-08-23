@@ -1,4 +1,5 @@
 # Linked List
+[![CircleCI](https://circleci.com/gh/abvdasker/crystal-linked-list.svg?style=svg)](https://circleci.com/gh/abvdasker/crystal-linked-list)
 A simple linked list implementation in Crystal
 
 # Installation
