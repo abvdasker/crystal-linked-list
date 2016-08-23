@@ -75,12 +75,30 @@ describe LinkedList do
     end
   end
 
-  # describe "#unshift" do
-  #   it "prepends an element to the list" do
-  #     list = LinkedList(String).new
-  #     list.unshift("foo")
-  #     puts list.to_a
-  #     list.peek.should eq "foo"
-  #   end
-  # end
+  describe "#unshift" do
+    it "prepends an element to the list" do
+      list = LinkedList(String).new
+      list.unshift("foo")
+      list.peek.should eq "foo"
+    end
+  end
+
+  describe "#shift" do
+    it "returns the first element from the list and removes it" do
+      list = LinkedList(Float64).new(32.1)
+      list.shift.should eq 32.1
+    end
+  end
+
+  describe "#+" do
+    it "concatenates two lists and returns a new list" do
+      first_list = LinkedList(Int32).new(1, 2)
+      second_list = LinkedList(String).new("foo", "bar")
+
+      result = first_list + second_list
+      result.append(32)
+      result.append("test")
+      puts result.to_a
+    end
+  end
 end

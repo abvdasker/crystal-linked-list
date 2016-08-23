@@ -18,6 +18,7 @@ class LinkedList(A)
     new_node = Node(A).new(value)
     @tail.next = new_node
     @tail = new_node
+    new_node.value
   end
 
   def push(value : A)
@@ -30,8 +31,12 @@ class LinkedList(A)
 
   def unshift(value : A)
     new_top = Node(A).new(value)
+    if @tail == @head
+      @tail = new_top
+    end
     new_top.next = @head.next
     @head.next = new_top
+    new_top.value
   end
 
   def shift
@@ -60,20 +65,16 @@ class LinkedList(A)
     last.value
   end
 
-  def each(&block)
+  def each(&block : A -> _)
     current = @head
     while !current.next.nil?
-      current = current.next.not_nil!
-      yield current.value
-    end
-  end
-
-  def +(list : LinkedList)
-    unless list.empty?
-      @tail.next = list.head.next
-      @tail = list.tail
+      yield current.value.not_nil!
     end
     self
+  end
+
+  def +(list : LinkedList(C))
+    LinkedList(A | C).new
   end
 
   def empty?
