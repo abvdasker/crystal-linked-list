@@ -2,6 +2,6 @@ name: linked_list
 version: 0.1.0
 license: MIT
 authors:
-  - Hal Rogers <hal.c.rogers@gmail.com>
+  - abvdasker <hal.c.rogers@gmail.com>
 
 description: Simple linked list implementation
