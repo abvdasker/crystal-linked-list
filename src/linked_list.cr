@@ -65,17 +65,22 @@ class LinkedList(A)
     last.value
   end
 
-  def each(&block : A -> _)
+  def each
     current = @head
-    while !current.next.nil?
-      yield current.value.not_nil!
+    until current.next.nil?
+      current = current.next.not_nil!
+      yield current.value
     end
     self
   end
 
-  def +(list : LinkedList(C))
-    LinkedList(A | C).new
-  end
+  # def +(list : LinkedList(C))
+  #   LinkedList(A | C).new.tap do |new_list|
+  #     list.each do |value|
+  #       new_list.append(value)
+  #     end
+  #   end
+  # end
 
   def empty?
     @head == @tail
@@ -91,8 +96,12 @@ class LinkedList(A)
 
   class Node(T)
     @next = nil
+    @value = nil
 
-    def initialize(@value : (T | Nil) = nil)
+    def initialize
+    end
+
+    def initialize(@value : T)
     end
 
     def value
