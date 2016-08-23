@@ -1,10 +1,19 @@
-# Linked List
-[![CircleCI](https://circleci.com/gh/abvdasker/crystal-linked-list.svg?style=svg)](https://circleci.com/gh/abvdasker/crystal-linked-list)
+# Crystal Linked List [![CircleCI](https://circleci.com/gh/abvdasker/crystal-linked-list.svg?style=svg)](https://circleci.com/gh/abvdasker/crystal-linked-list)
+
 A simple linked list implementation in Crystal
 
-# Installation
+## Installation
 
-# Usage
+Add this to a project's `shards.yml`
+
+```
+dependencies:
+  linked_list:
+    git: https://github.com/abvdasker/linked_list.git
+```
+Then run `crystal deps`
+
+## Usage
 ```
 require "linked_list"
 
