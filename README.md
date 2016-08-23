@@ -6,15 +6,17 @@ A simple linked list implementation in Crystal
 
 Add this to a project's `shards.yml`
 
-```
+```yml
 dependencies:
   linked_list:
     git: https://github.com/abvdasker/linked_list.git
 ```
+
 Then run `crystal deps`
 
 ## Usage
-```
+
+```crystal
 require "linked_list"
 
 list = LinkedList(Int32 | String).new
