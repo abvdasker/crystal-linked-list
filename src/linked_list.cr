@@ -21,12 +21,19 @@ class LinkedList(A)
     new_node.value
   end
 
+  def append(*values)
+    values.each do |value|
+      append(value)
+    end
+  end
+
   def push(value : A)
     append(value)
   end
 
   def <<(value : A)
     append(value)
+    self
   end
 
   def unshift(value : A)

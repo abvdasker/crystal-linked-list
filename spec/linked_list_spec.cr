@@ -30,6 +30,14 @@ describe LinkedList do
       list.peek.should eq nil
       list.size.should eq 2
     end
+
+    it "appends multiple elements to the list" do
+      list = LinkedList(Int32 | String).new
+
+      list.append(1, "foo")
+      list.peek.should eq "foo"
+      list.size.should eq 2
+    end
   end
 
   describe "#push" do
