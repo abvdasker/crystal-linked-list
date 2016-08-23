@@ -14,14 +14,22 @@ class LinkedList(A)
     end
   end
 
-  def append(number : A)
-    new_node = Node(A).new(number)
+  def append(value : A)
+    new_node = Node(A).new(value)
     @tail.next = new_node
     @tail = new_node
   end
 
-  def unshift(number : A)
-    new_top = Node(A).new(number)
+  def push(value : A)
+    append(value)
+  end
+
+  def <<(value : A)
+    append(value)
+  end
+
+  def unshift(value : A)
+    new_top = Node(A).new(value)
     new_top.next = @head.next
     @head.next = new_top
   end
