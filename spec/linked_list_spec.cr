@@ -98,16 +98,16 @@ describe LinkedList do
     end
   end
 
-  # describe "#+" do
-  #   it "concatenates two lists and returns a new list" do
-  #     first_list = LinkedList(Int32).new(1, 2)
-  #     second_list = LinkedList(String).new("foo", "bar")
+  describe "#+" do
+    pending "concatenates two lists and returns a new list" do
+      first_list = LinkedList(Int32).new(1, 2)
+      second_list = LinkedList(String).new("foo", "bar")
 
-  #     result = first_list + second_list
-  #     result.each do |value|
-  #       puts value
-  #     end
-  #     puts typeof(result)
-  #   end
-  # end
+      result = first_list + second_list
+      result.each do |value|
+        puts value
+      end
+      puts typeof(result)
+    end
+  end
 end
