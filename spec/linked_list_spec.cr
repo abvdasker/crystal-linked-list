@@ -110,4 +110,15 @@ describe LinkedList do
       result_array[-1].should eq "bar"
     end
   end
+
+  describe "#reverse" do
+    it "creates a copy of the linked list with the order reversed" do
+      list = LinkedList(Int32).new(1, 2, 3)
+      reversed_list = list.reverse
+
+      reversed_list.shift.should eq 3
+      reversed_list.shift.should eq 2
+      reversed_list.shift.should eq 1
+    end
+  end
 end

@@ -73,10 +73,8 @@ class LinkedList(A)
   end
 
   def each
-    current = @head
-    until current.next.nil?
-      current = current.next.not_nil!
-      yield current.value
+    each_node do |node|
+      yield node.value
     end
     self
   end
@@ -96,12 +94,28 @@ class LinkedList(A)
     @head == @tail
   end
 
+  def reverse
+    LinkedList(A).new.tap do |new_list|
+      each do |value|
+        new_list.unshift(value.not_nil!)
+      end
+    end
+  end
+
   protected def head
     @head
   end
 
   protected def tail
     @tail
+  end
+
+  private def each_node
+    current = @head
+    until current.next.nil?
+      current = current.next.not_nil!
+      yield current
+    end
   end
 
   class Node(T)
