@@ -1,5 +1,5 @@
 class LinkedList(A)
-  include Enumerable(A)
+  include Enumerable(A | Nil)
 
   def initialize
     @head = Node(A).new
@@ -81,13 +81,16 @@ class LinkedList(A)
     self
   end
 
-  # def +(list : LinkedList(C))
-  #   LinkedList(A | C).new.tap do |new_list|
-  #     list.each do |value|
-  #       new_list.append(value)
-  #     end
-  #   end
-  # end
+  def +(list : LinkedList(C))
+    LinkedList(A | C).new.tap do |new_list|
+      each do |value|
+        new_list.append(value)
+      end
+      list.each do |value|
+        new_list.append(value)
+      end
+    end
+  end
 
   def empty?
     @head == @tail

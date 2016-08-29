@@ -99,15 +99,15 @@ describe LinkedList do
   end
 
   describe "#+" do
-    pending "concatenates two lists and returns a new list" do
+    it "concatenates two lists and returns a new list" do
       first_list = LinkedList(Int32).new(1, 2)
       second_list = LinkedList(String).new("foo", "bar")
 
       result = first_list + second_list
-      result.each do |value|
-        puts value
-      end
-      puts typeof(result)
+      result_array = result.to_a
+
+      result_array[0].should eq 1
+      result_array[-1].should eq "bar"
     end
   end
 end
