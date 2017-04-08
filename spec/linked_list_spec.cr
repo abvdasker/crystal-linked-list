@@ -83,6 +83,28 @@ describe LinkedList do
     end
   end
 
+  describe "#empty?" do
+    it "returns true when there are no elements in the list" do
+      list = LinkedList(Int32).new
+
+      list.empty?.should be_true
+    end
+
+    it "returns true when all elements have been removed from the list" do
+      list = LinkedList(Int32).new(1, 2)
+      list.pop
+      list.pop
+
+      list.empty?.should be_true
+    end
+
+    it "returns false" do
+      list = LinkedList(Int32).new(1, 2)
+
+      list.empty?.should be_false
+    end
+  end
+
   describe "#unshift" do
     it "prepends an element to the list" do
       list = LinkedList(String).new
