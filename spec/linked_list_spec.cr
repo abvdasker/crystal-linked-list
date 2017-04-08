@@ -111,6 +111,19 @@ describe LinkedList do
     end
   end
 
+  describe "#concat" do
+    it "concatenates two lists modifying the first list" do
+      first_list = LinkedList(Int32).new(1, 2)
+      second_list = LinkedList(Int32).new(3, 4)
+
+      first_list.concat(second_list)
+      result_array = first_list.to_a
+
+      result_array[0].should eq 1
+      result_array[-1].should eq 4
+    end
+  end
+
   describe "#reverse" do
     it "creates a copy of the linked list with the order reversed" do
       list = LinkedList(Int32).new(1, 2, 3)

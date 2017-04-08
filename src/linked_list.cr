@@ -94,6 +94,12 @@ class LinkedList(A)
     end
   end
 
+  def concat(list : LinkedList(A))
+    @tail.next = list.head.next
+    @tail = list.tail
+    self
+  end
+
   def empty?
     @head == @tail
   end
