@@ -191,5 +191,14 @@ describe LinkedList do
         values.shift.should eq elem
       end
     end
+
+    it "iterates over nothing" do
+      values = [1, 2, "test"]
+      list = LinkedList(Int32 | String).new
+
+      list.each do |elem|
+        false.should be_true
+      end
+    end
   end
 end
