@@ -48,6 +48,13 @@ describe LinkedList do
       list.peek.should eq nil
       list.size.should eq 2
     end
+
+    it "adds the element to the end of the list" do
+      list = LinkedList(Int32).new(1)
+      list.push(2)
+
+      list.peek.should eq 2
+    end
   end
 
   describe "#<<" do
@@ -57,6 +64,13 @@ describe LinkedList do
 
       list.peek.should eq nil
       list.size.should eq 2
+    end
+
+    it "adds the element to the end of the list" do
+      list = LinkedList(Int32).new(1)
+      list << 2 << 3
+
+      list.peek.should eq 3
     end
   end
 
