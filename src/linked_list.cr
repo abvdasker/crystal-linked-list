@@ -83,7 +83,7 @@ class LinkedList(A)
     self
   end
 
-  def +(list : LinkedList(C)) forall C
+  def +(list : Enumerable(C)) forall C
     LinkedList(A | C).new.tap do |new_list|
       each do |value|
         new_list.append(value)

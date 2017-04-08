@@ -109,6 +109,17 @@ describe LinkedList do
       result_array[0].should eq 1
       result_array[-1].should eq "bar"
     end
+
+    it "concatenates an array with a list and retuns a new list" do
+      first_list = LinkedList(Int32).new(1, 2)
+      array = ["foo", "bar"]
+
+      result = first_list + array
+      result_array = result.to_a
+
+      result_array[0].should eq 1
+      result_array[-1].should eq "bar"
+    end
   end
 
   describe "#concat" do
