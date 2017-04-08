@@ -7,6 +7,10 @@ class LinkedList(A)
   end
 
   def initialize(*values)
+    initialize(values)
+  end
+
+  def initialize(values : Enumerable(A))
     @head = Node(A).new
     @tail = @head
     values.each do |value|
@@ -79,7 +83,7 @@ class LinkedList(A)
     self
   end
 
-  def +(list : LinkedList(C))
+  def +(list : LinkedList(C)) forall C
     LinkedList(A | C).new.tap do |new_list|
       each do |value|
         new_list.append(value)

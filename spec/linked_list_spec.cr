@@ -121,4 +121,15 @@ describe LinkedList do
       reversed_list.shift.should eq 1
     end
   end
+
+  describe "#each" do
+    it "iterates over each value" do
+      values = [1, 2, "test"]
+      list = LinkedList(Int32 | String).new(values)
+
+      list.each do |elem|
+        values.shift.should eq elem
+      end
+    end
+  end
 end
