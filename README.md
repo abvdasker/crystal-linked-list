@@ -9,10 +9,10 @@ Add this to a project's `shards.yml`
 ```yml
 dependencies:
   linked_list:
-    git: https://github.com/abvdasker/linked_list.git
+    git: https://github.com/abvdasker/crystal-linked-list.git
 ```
 
-Then run `crystal deps`
+Then run `shards`
 
 ## Usage
 
