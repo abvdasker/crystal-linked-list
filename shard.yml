@@ -1,8 +1,21 @@
 name: linked_list
 version: 0.2.0
+
+crystal: 0.21.1
 license: MIT
+
 authors:
   - abvdasker <hal.c.rogers@gmail.com>
 
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 0.11.0
+
+targets:
+  linked_list:
+    main: src/linked_list.cr
+  linked_list_benchmark:
+    main: src/linked_list_benchmark.cr
+
 description: Simple linked list implementation
-crystal: 0.21.1

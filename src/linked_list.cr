@@ -15,11 +15,14 @@
 # 2
 # ```
 class LinkedList(A)
+  @head : Node(A) | Nil
+  @tail : Node(A) | Nil
+
   include Enumerable(A | Nil)
 
   # Creates an empty linked list.
   def initialize
-    @head = Node(A).new
+    @head = nil
     @tail = @head
   end
 
@@ -30,7 +33,7 @@ class LinkedList(A)
 
   # ditto
   def initialize(values : Enumerable(A))
-    @head = Node(A).new
+    @head = nil
     @tail = @head
     values.each do |value|
       append(value)
@@ -47,15 +50,68 @@ class LinkedList(A)
   # list.pop() # => 1
   # ```
   def append(value : A)
-    new_node = Node(A).new(value)
-    @tail.next = new_node
-    @tail = new_node
-    new_node.value
+    if @head.nil?
+      @head = Node(A).new(value)
+      @tail = @head
+    else
+      new_node = Node(A).new(value)
+      @tail.not_nil!.next = new_node
+      @tail = new_node
+      new_node.value
+    end
   end
 
   # ditto
   def push(value : A)
     append(value)
+  end
+
+  # Adds a *value* to the linked list at a specified index.
+  #
+  # ```
+  # list = LinkedList(Int32).new
+  # list.append(1)
+  # list.append(2)
+  # list.insert_at(3, 1)
+  # ```
+  def insert_at(value : A, index : Int32)
+    # non-contiguous
+    return nil if index > size
+
+    # inserting at the beginning is the unshift function
+    if index == 0
+      unshift(value)
+      return
+    end
+
+    # not index 0, but list is empty
+    # non-contiguous
+    if @head.nil?
+      return nil
+    end
+
+    # start at head and move to the index
+    last = @tail
+    previous = @head
+    current = @head.not_nil!.next.not_nil!
+
+    search = 1
+
+    while current != last && search < index
+      previous = current
+      current = current.next.not_nil!
+      search += 1
+    end
+
+    # made it to the desired index
+    if search != index
+      return nil
+    end
+
+    new_node = Node(A).new(value)
+
+    previous.not_nil!.next = new_node
+    new_node.next = current
   end
 
   # Override the << (shift) operator to add a *value* to the end of a
@@ -87,6 +143,13 @@ class LinkedList(A)
     end
   end
 
+  # same as append
+  def push(*values)
+    values.each do |value|
+      push(value)
+    end
+  end
+
   # Adds a *value* to the beginning of a linked list.
   #
   # ```
@@ -96,12 +159,13 @@ class LinkedList(A)
   # list.pop() # => 2
   # ```
   def unshift(value : A)
-    new_top = Node(A).new(value)
-    if @tail == @head
-      @tail = new_top
+    if @head.nil?
+      append(value)
+      return
     end
-    new_top.next = @head.next
-    @head.next = new_top
+    new_top = Node(A).new(value)
+    new_top.next = @head
+    @head = new_top
     new_top.value
   end
 
@@ -114,10 +178,10 @@ class LinkedList(A)
   # list.peek() # => 4.56
   # ```
   def shift
-    return if @head.next.nil?
+    return if @head.nil?
 
-    first = @head.next.not_nil!
-    @head.next = first.next
+    first = @head.not_nil!
+    @head = head.not_nil!.next
     first.value
   end
 
@@ -130,7 +194,8 @@ class LinkedList(A)
   # list.peek() # => 4.56
   # ```
   def peek
-    @tail.value
+    return nil if @tail.nil?
+    @tail.not_nil!.value
   end
 
   # Returns the last `Node` from the list and removes it.
@@ -142,17 +207,24 @@ class LinkedList(A)
   # list.peek() # => 1.23
   # ```
   def pop
-    return nil if @head == @tail
+    return nil if @head.nil?
+
+    if @head == @tail
+      current = @head
+      @head = nil
+      @tail = nil
+      return current.not_nil!.value
+    end
 
     last = @tail
     current = @head
-    while current.next != last
-      current = current.next.not_nil!
+    while current.not_nil!.next != last
+      current = current.not_nil!.next.not_nil!
     end
 
-    current.next = nil
+    current.not_nil!.next = nil
     @tail = current
-    last.value
+    last.not_nil!.value
   end
 
   # Iterates over all the values in the linked list.
@@ -199,6 +271,19 @@ class LinkedList(A)
     end
   end
 
+  def [](index : Int32)
+    return nil if @head.nil?
+
+    search = 0
+    each_node do |node|
+      if search == index
+        return node.value
+      end
+
+      search += 1
+    end
+  end
+
   # Adds all the elemenets of the *list* to the end of the current linked list.
   #
   # ```
@@ -209,7 +294,7 @@ class LinkedList(A)
   # combined_list.shift() # => 1
   # ```
   def concat(list : LinkedList(A))
-    @tail.next = list.head.next
+    @tail.not_nil!.next = list.head
     @tail = list.tail
     self
   end
@@ -223,7 +308,7 @@ class LinkedList(A)
   # list.empty? # => false
   # ```
   def empty?
-    @head == @tail
+    @head.nil?
   end
 
   # Creates a copy of the `LinkedList` with the order reversed.
@@ -280,11 +365,44 @@ class LinkedList(A)
   # 3
   # ```
   private def each_node
+    return nil if @head.nil?
+
     current = @head
-    until current.next.nil?
-      current = current.next.not_nil!
-      yield current
+    loop do
+      yield current.not_nil!
+      current = current.not_nil!.next
+      break if current.nil?
     end
+  end
+
+  # Overloading the to_s function to print the contents
+  # of the linked list
+  # This calls the to_s function of each node in the
+  # linked list
+  #
+  # ```
+  # values = [1, 2, 3]
+  # puts values
+  #
+  # The above produces:
+  #
+  # ```text
+  # [ 1, 2, 3 ]
+  # ```
+  def to_s(io)
+    io << "[ "
+
+    # iterate through the nodes in the linked list
+    each_node do |elem|
+      io << elem.value
+      # kind of clunky, if this is the tail node
+      # don't print the comma
+      if elem != @tail
+        io << ", "
+      end
+    end
+
+    io << " ]"
   end
 
   # A node is the building block of linked lists consisting of a values
@@ -346,6 +464,12 @@ class LinkedList(A)
     # ```
     def next=(next_node : Node(T) | Nil)
       @next = next_node
+    end
+
+    # Overloading the to_s function to print the contents
+    # of the node
+    def to_s(io)
+      io << @value
     end
   end
 end
