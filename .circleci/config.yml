@@ -1,0 +1,21 @@
+version: 2 # use CircleCI 2.0
+jobs: # a collection of jobs
+  build:
+    docker: # run build steps with docker
+      - image: crystallang/crystal:0.33.0 # primary docker container; all `steps` will run here.
+    steps: # a collection of executable steps
+      - checkout # checks out source code to working directory
+      - restore_cache: # Restore dependency cache
+      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "shard.lock" }}
+      - run:
+          name: Install dependencies.
+          command: shards install
+      - save_cache: # Step to save dependency cache
+          key: dependency-cache-{{ checksum "shard.lock" }}
+          paths:
+            - ./lib
+      - run:
+          name: test
+          command: crystal spec
+# See https://circleci.com/docs/2.0/deployment-integrations/ for deploy exampl
