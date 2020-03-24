@@ -2,7 +2,7 @@ version: 2 # use CircleCI 2.0
 jobs: # a collection of jobs
   build:
     docker: # run build steps with docker
-      - image: crystallang/crystal:0.27.0 # primary docker container; all `steps` will run here.
+      - image: crystallang/crystal:0.33.0 # primary docker container; all `steps` will run here.
     steps: # a collection of executable steps
       - checkout # checks out source code to working directory
       - restore_cache: # Restore dependency cache
